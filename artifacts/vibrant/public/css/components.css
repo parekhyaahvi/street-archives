@@ -79,6 +79,29 @@
   color: var(--text-primary);
 }
 
+.cart-btn-container {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--pink-gradient);
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  pointer-events: none;
+  box-shadow: 0 0 6px rgba(255, 45, 120, 0.4);
+}
+
 /* Reusable buttons */
 .btn {
   display: inline-flex;
