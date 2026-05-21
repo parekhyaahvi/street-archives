@@ -22,11 +22,17 @@ router.get("/", async (req, res) => {
     if (req.query.search) {
       query.name = { $regex: req.query.search, $options: "i" };
     }
+    if (req.query.featured === "true") {
+      query.featured = true;
+    }
 
     let sortOptions: any = {};
     if (req.query.sort === "priceAsc") sortOptions.price = 1;
     else if (req.query.sort === "priceDesc") sortOptions.price = -1;
-    else sortOptions.createdAt = -1;
+    else {
+      sortOptions.featured = -1;
+      sortOptions.createdAt = -1;
+    }
 
     const total = await Product.countDocuments(query);
     const products = await Product.find(query).sort(sortOptions).skip(skip).limit(limit);

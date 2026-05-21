@@ -172,6 +172,26 @@
     <h1 class="hero-headline" style="font-size: clamp(36px, 6vw, 64px);" id="catalog-title">THE drops feed</h1>
   </header>
 
+  <!-- THE DROP — Featured Products Section -->
+  <section class="container" id="drop-section" style="margin-bottom: 56px;">
+    <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom: 24px;">
+      <div>
+        <span class="uppercase-label" style="color: var(--pink); letter-spacing: 0.15em;">VIBRANT ORIGINALS</span>
+        <h2 style="font-size: clamp(28px,4vw,48px); font-weight:900; text-transform:uppercase; margin: 6px 0 0; letter-spacing:-0.02em;">THE DROP</h2>
+      </div>
+      <span class="uppercase-label" style="font-size:11px; color:var(--text-secondary);">DROP NO. 01 — 10 PIECES</span>
+    </div>
+    <div class="catalog-grid" id="drop-grid" style="grid-template-columns: repeat(5, 1fr); gap: 16px;"></div>
+  </section>
+
+  <!-- Divider -->
+  <div class="container" id="drop-divider" style="margin-bottom: 40px;">
+    <div style="border-top: 1px solid var(--border); padding-top: 40px; display:flex; align-items:baseline; gap:16px;">
+      <span class="uppercase-label" style="font-size:11px; color:var(--text-secondary); white-space:nowrap;">FULL ARCHIVE</span>
+      <div style="flex:1; height:1px; background: var(--border);"></div>
+    </div>
+  </div>
+
   <!-- Filters & Search Toolbar -->
   <main class="container">
     <div class="filter-toolbar" id="catalog-filters">
@@ -273,10 +293,31 @@
   <script src="/js/ui.js"></script>
   <script>
     let currentPage = 1;
-    const limit = 10; // 10 products per page as requested
+    const limit = 10;
 
-    document.addEventListener("DOMContentLoaded", () => {
-      // 1. Initial State parsing from URL Query Parameters
+    const buildProductCard = (p, compact = false) => `
+      <a href="/product.html?id=${p._id}" class="card product-card${compact ? " product-card--compact" : ""}" id="prod-card-${p._id}">
+        ${p.featured && !compact ? `<span style="position:absolute;top:12px;left:12px;background:var(--pink-gradient);color:#fff;font-size:10px;font-weight:700;letter-spacing:0.1em;padding:4px 8px;border-radius:4px;z-index:2;text-transform:uppercase;">DROP 01</span>` : ""}
+        <div class="product-image-container">
+          ${p.imageUrl
+            ? `<img src="${p.imageUrl}" alt="${p.name}" class="product-image">`
+            : `<svg class="product-silhouette" stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M20.38 3.46L16 22l-4-9-9-4 17.38-5.54z"></path></svg>`
+          }
+        </div>
+        <div class="product-details">
+          <span class="uppercase-label">${p.category}</span>
+          <h3 class="card-title">${p.name}</h3>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:12px;">
+            <span class="price">$${p.price.toFixed(2)}</span>
+            <span class="uppercase-label" style="font-size:10px;color:${p.stock > 0 ? "var(--green)" : "var(--red)"}">
+              ${p.stock > 0 ? "IN STOCK" : "OUT OF STOCK"}
+            </span>
+          </div>
+        </div>
+      </a>
+    `;
+
+    document.addEventListener("DOMContentLoaded", async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const initialCategory = urlParams.get("category") || "";
       const initialSearch = urlParams.get("search") || "";
@@ -285,18 +326,42 @@
       const categorySelect = document.getElementById("filter-category");
       const sortSelect = document.getElementById("filter-sort");
       const searchInput = document.getElementById("search-keyword");
+      const dropSection = document.getElementById("drop-section");
+      const dropDivider = document.getElementById("drop-divider");
 
       if (initialCategory) categorySelect.value = initialCategory;
       if (initialSort) sortSelect.value = initialSort;
       if (initialSearch) searchInput.value = initialSearch;
 
-      // 2. Fetcher pipeline
+      const isFiltered = () =>
+        categorySelect.value !== "" || searchInput.value.trim() !== "" || sortSelect.value !== "newest";
+
+      const toggleDropSection = () => {
+        const hide = isFiltered();
+        dropSection.style.display = hide ? "none" : "";
+        dropDivider.style.display = hide ? "none" : "";
+      };
+
+      const fetchFeatured = async () => {
+        const dropGrid = document.getElementById("drop-grid");
+        dropGrid.innerHTML = `<div style="grid-column:1/-1;height:280px;display:flex;align-items:center;justify-content:center;"><p style="color:var(--text-secondary);font-size:13px;">Loading drop...</p></div>`;
+        try {
+          const res = await fetch("/api/products?featured=true&limit=10");
+          const data = await res.json();
+          dropGrid.innerHTML = "";
+          (data.products || []).forEach(p => dropGrid.insertAdjacentHTML("beforeend", buildProductCard(p, true)));
+        } catch (e) {
+          dropGrid.innerHTML = "";
+        }
+      };
+
       const fetchProducts = async () => {
+        toggleDropSection();
+
         const category = categorySelect.value;
         const sort = sortSelect.value;
         const search = searchInput.value;
 
-        // Build query string
         let query = `/api/products?page=${currentPage}&limit=${limit}`;
         if (category) query += `&category=${encodeURIComponent(category)}`;
         if (sort) query += `&sort=${encodeURIComponent(sort)}`;
@@ -304,141 +369,64 @@
 
         const grid = document.getElementById("catalog-grid");
         grid.innerHTML = `
-          <div class="card product-card" style="grid-column: 1/-1; min-height: 300px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-style: dashed;">
-            <div class="ambient-glow" style="width: 100px; height: 100px;"></div>
-            <p style="color: var(--text-secondary); text-align: center; font-size: 14px;">Retrieving Drops...</p>
-          </div>
-        `;
+          <div class="card product-card" style="grid-column:1/-1;min-height:300px;display:flex;flex-direction:column;justify-content:center;align-items:center;border-style:dashed;">
+            <p style="color:var(--text-secondary);text-align:center;font-size:14px;">Retrieving Drops...</p>
+          </div>`;
 
         try {
           const res = await fetch(query);
           const data = await res.json();
           if (!res.ok) throw new Error(data.message || "Failed request");
 
-          renderProducts(data.products);
+          grid.innerHTML = "";
+          if (!data.products || data.products.length === 0) {
+            grid.innerHTML = `<div class="card product-card" style="grid-column:1/-1;min-height:250px;display:flex;flex-direction:column;justify-content:center;align-items:center;border-style:dashed;"><p style="color:var(--text-secondary);font-size:14px;">No products match the filter parameters.</p></div>`;
+          } else {
+            data.products.forEach(p => grid.insertAdjacentHTML("beforeend", buildProductCard(p)));
+          }
           renderPagination(data.page, data.pages);
         } catch (err) {
-          console.error("Products retrieval failure:", err);
-          grid.innerHTML = `
-            <div class="card product-card" style="grid-column: 1/-1; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-style: dashed;">
-              <p style="color: var(--text-secondary); font-size: 14px;">Failed to reload products catalog. Verify server connection.</p>
-            </div>
-          `;
+          grid.innerHTML = `<div class="card product-card" style="grid-column:1/-1;min-height:250px;display:flex;flex-direction:column;justify-content:center;align-items:center;border-style:dashed;"><p style="color:var(--text-secondary);font-size:14px;">Failed to reload products catalog. Verify server connection.</p></div>`;
         }
       };
 
-      // 3. Renderer cards
-      const renderProducts = (products) => {
-        const grid = document.getElementById("catalog-grid");
-        grid.innerHTML = "";
-
-        if (!products || products.length === 0) {
-          grid.innerHTML = `
-            <div class="card product-card" style="grid-column: 1/-1; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-style: dashed;">
-              <p style="color: var(--text-secondary); font-size: 14px;">No products match the filter parameters.</p>
-            </div>
-          `;
-          return;
-        }
-
-        products.forEach(p => {
-          const productHtml = `
-            <a href="/product.html?id=${p._id}" class="card product-card" id="prod-card-${p._id}">
-              <div class="product-image-container">
-                ${p.imageUrl 
-                  ? `<img src="${p.imageUrl}" alt="${p.name}" class="product-image">`
-                  : `
-                    <svg class="product-silhouette" stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M20.38 3.46L16 22l-4-9-9-4 17.38-5.54z"></path>
-                    </svg>
-                  `
-                }
-              </div>
-              <div class="product-details">
-                <span class="uppercase-label">${p.category}</span>
-                <h3 class="card-title">${p.name}</h3>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top: auto; padding-top: 12px;">
-                  <span class="price">$${p.price.toFixed(2)}</span>
-                  <span class="uppercase-label" style="font-size:10px; color:${p.stock > 0 ? "var(--green)" : "var(--red)"}">
-                    ${p.stock > 0 ? "IN STOCK" : "OUT OF STOCK"}
-                  </span>
-                </div>
-              </div>
-            </a>
-          `;
-          grid.insertAdjacentHTML("beforeend", productHtml);
-        });
-      };
-
-      // 4. Render standard pagination buttons (Q3 standard page stepper)
       const renderPagination = (page, totalPages) => {
         const controls = document.getElementById("pagination-controls");
         controls.innerHTML = "";
-
         if (totalPages <= 1) return;
 
-        // Previous button
         const prevBtn = document.createElement("button");
         prevBtn.className = `page-btn nav-page-btn ${page === 1 ? "disabled" : ""}`;
         prevBtn.innerText = "Previous";
-        if (page > 1) {
-          prevBtn.onclick = () => {
-            currentPage = page - 1;
-            fetchProducts();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          };
-        }
+        if (page > 1) prevBtn.onclick = () => { currentPage = page - 1; fetchProducts(); window.scrollTo({ top: 0, behavior: "smooth" }); };
         controls.appendChild(prevBtn);
 
-        // Individual page number buttons
         for (let i = 1; i <= totalPages; i++) {
           const numBtn = document.createElement("button");
           numBtn.className = `page-btn ${i === page ? "active" : ""}`;
           numBtn.innerText = i;
-          numBtn.onclick = () => {
-            currentPage = i;
-            fetchProducts();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          };
+          numBtn.onclick = () => { currentPage = i; fetchProducts(); window.scrollTo({ top: 0, behavior: "smooth" }); };
           controls.appendChild(numBtn);
         }
 
-        // Next button
         const nextBtn = document.createElement("button");
         nextBtn.className = `page-btn nav-page-btn ${page === totalPages ? "disabled" : ""}`;
         nextBtn.innerText = "Next";
-        if (page < totalPages) {
-          nextBtn.onclick = () => {
-            currentPage = page + 1;
-            fetchProducts();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          };
-        }
+        if (page < totalPages) nextBtn.onclick = () => { currentPage = page + 1; fetchProducts(); window.scrollTo({ top: 0, behavior: "smooth" }); };
         controls.appendChild(nextBtn);
       };
 
-      // 5. Filters listeners triggers
-      categorySelect.addEventListener("change", () => {
-        currentPage = 1;
-        fetchProducts();
-      });
-      
-      sortSelect.addEventListener("change", () => {
-        currentPage = 1;
-        fetchProducts();
-      });
+      categorySelect.addEventListener("change", () => { currentPage = 1; fetchProducts(); });
+      sortSelect.addEventListener("change", () => { currentPage = 1; fetchProducts(); });
 
-      // Simple debounce keypress filter
       let searchTimeout;
       searchInput.addEventListener("input", () => {
         clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => {
-          currentPage = 1;
-          fetchProducts();
-        }, 300);
+        searchTimeout = setTimeout(() => { currentPage = 1; fetchProducts(); }, 300);
       });
 
-      // Initial execution
+      toggleDropSection();
+      fetchFeatured();
       fetchProducts();
     });
   </script>

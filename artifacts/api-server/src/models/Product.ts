@@ -10,6 +10,7 @@ export interface IProduct extends mongoose.Document {
   imageUrl: string;
   images: string[];
   stock: number;
+  featured: boolean;
 }
 
 const productSchema = new mongoose.Schema<IProduct>(
@@ -23,6 +24,7 @@ const productSchema = new mongoose.Schema<IProduct>(
     imageUrl: { type: String, required: true },
     images: { type: [String], default: [] },
     stock: { type: Number, required: true, default: 0, min: 0 },
+    featured: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
