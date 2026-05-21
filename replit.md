@@ -1,45 +1,50 @@
-# [Project name]
+# VIBRANT
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A streetwear e-commerce platform with product catalog, cart, checkout, and user auth.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- `artifacts/api-server: API Server` workflow — Express backend on port 8080
+- `artifacts/vibrant: web` workflow — Vite static server on port 23614
+- Required secrets: `MONGODB_URI`, `JWT_SECRET`
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- API: Express 5 + Mongoose (MongoDB)
+- Frontend: Vanilla HTML/CSS/JS served via Vite static dev server
+- Auth: JWT (jsonwebtoken + bcryptjs)
+- Build: esbuild (api-server CJS bundle)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/vibrant/` — frontend HTML/CSS/JS app
+  - `public/` — all HTML pages, CSS, JS assets
+  - `index.html` — root (VIBRANT homepage)
+- `artifacts/api-server/src/` — Express backend
+  - `models/` — Mongoose models (User, Product, Cart, Order)
+  - `routes/` — Express routes (auth, cart, products, orders)
+  - `middlewares/auth.ts` — JWT protect + admin middleware
+  - `lib/db.ts` — MongoDB connection via Mongoose
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Vanilla HTML/JS frontend served as Vite static files (not React) — the imported app was fully vanilla
+- MongoDB/Mongoose for data (not Drizzle/PostgreSQL) — original app used MongoDB Atlas
+- JWT tokens stored in localStorage, sent as Bearer headers
+- Cart `imageUrl` is optional (not required) — products may lack images
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
-
-## User preferences
-
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Browse and filter a product catalog
+- View product detail pages and add items to cart (select size + quantity)
+- User registration and login
+- Cart management (add, update quantity, remove, clear)
+- Checkout with shipping address (mock payment)
+- Profile page with order history
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
-
-## Pointers
-
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+- The `MONGODB_URI` secret must point to a MongoDB Atlas cluster
+- Products require an `imageUrl` to display images (can be empty string — won't break cart)
+- Cart add-to-bag error was caused by Mongoose validation requiring `imageUrl` on cart items when products had empty imageUrl — fixed by making it optional with `default: ""`

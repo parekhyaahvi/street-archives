@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIBRANT | Streetwear Catalog</title>
+  <meta name="description" content="Shop VIBRANT collections, outerwear, and streetwear accessories.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  
+  <style>
+    .catalog-page-header {
+      padding: 64px 0 32px 0;
+    }
+
+    .filter-toolbar {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 40px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-select {
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      outline: none;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .filter-select:focus {
+      border-color: var(--pink);
+    }
+
+    .search-bar {
+      max-width: 300px;
+      display: flex;
+      position: relative;
+    }
+
+    .search-input {
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--text-primary);
+      outline: none;
+      width: 100%;
+      transition: var(--transition-fast);
+    }
+
+    .search-input:focus {
+      border-color: var(--pink);
+    }
+
+    /* Pagination controls matching Q3 specs */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 56px;
+      margin-bottom: 56px;
+    }
+
+    .page-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      transition: var(--transition-fast);
+    }
+
+    .page-btn:hover:not(.disabled) {
+      border-color: var(--pink);
+      color: var(--pink);
+    }
+
+    .page-btn.active {
+      background: var(--pink-gradient);
+      color: #FFFFFF;
+      border-color: transparent;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .page-btn.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .nav-page-btn {
+      padding: 0 16px;
+      width: auto;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="marquee-container" id="promo-marquee">
+    <div class="marquee-content">
+      <span class="marquee-text">LIMITED STREETWEAR ARCHIVES // SHIPPED GLOBALLY // VIBRANT LABS DROP NO. 01 // NO RE-RUNS EVER // IN VIBRANT WE TRUST //</span>
+      <span class="marquee-text">LIMITED STREETWEAR ARCHIVES // SHIPPED GLOBALLY // VIBRANT LABS DROP NO. 01 // NO RE-RUNS EVER // IN VIBRANT WE TRUST //</span>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="site-navbar">
+    <div class="container navbar-container">
+      <a href="/" class="nav-logo">Vibrant</a>
+      <ul class="nav-links">
+        <li><a href="/catalog.html" class="active">Shop</a></li>
+        <li><a href="#" class="coming-soon">Lookbook</a></li>
+        <li><a href="#" class="coming-soon">Editorial</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="nav-icon" id="theme-toggle-btn" aria-label="Toggle Theme"></button>
+        <a href="/cart.html" class="nav-icon cart-btn-container" aria-label="View Shopping Cart">
+          <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="cart-badge" id="cart-badge">0</span>
+        </a>
+        <a href="/auth.html" class="nav-icon" id="nav-auth-link" aria-label="Account Settings">
+          <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="container catalog-page-header">
+    <span class="uppercase-label" id="catalog-subtitle">STREETWEAR ARCHIVE</span>
+    <h1 class="hero-headline" style="font-size: clamp(36px, 6vw, 64px);" id="catalog-title">THE drops feed</h1>
+  </header>
+
+  <!-- Filters & Search Toolbar -->
+  <main class="container">
+    <div class="filter-toolbar" id="catalog-filters">
+      <div class="filter-group">
+        <!-- Category selector -->
+        <select class="filter-select" id="filter-category" aria-label="Select Category">
+          <option value="">ALL COLLECTIONS</option>
+          <option value="New Arrivals">NEW ARRIVALS</option>
+          <option value="Men">MEN COLLECTION</option>
+          <option value="Women">WOMEN COLLECTION</option>
+          <option value="Accessories">ACCESSORIES</option>
+        </select>
+        
+        <!-- Sort selector -->
+        <select class="filter-select" id="filter-sort" aria-label="Sort Orders">
+          <option value="newest">NEWEST DROPS</option>
+          <option value="priceAsc">PRICE: LOW TO HIGH</option>
+          <option value="priceDesc">PRICE: HIGH TO LOW</option>
+        </select>
+      </div>
+
+      <!-- Keyword Search bar -->
+      <div class="search-bar">
+        <input type="text" id="search-keyword" placeholder="KEYWORD SEARCH..." class="search-input" aria-label="Search items">
+      </div>
+    </div>
+
+    <!-- Product Feed Grid -->
+    <div class="catalog-grid" id="catalog-grid">
+      <!-- Dynamically rendered cards -->
+    </div>
+
+    <!-- Q3 standard pagination buttons -->
+    <div class="pagination" id="pagination-controls">
+      <!-- Dynamically compiled buttons: Previous / 1 / 2 / 3 / Next -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" id="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 VIBRANT LABS. ALL RIGHTS RESERVED.</p>
+        <p style="letter-spacing: 0.15em;">DESIGNED IN TOKYO</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/ui.js"></script>
+  <script>
+    let currentPage = 1;
+    const limit = 10; // 10 products per page as requested
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Initial State parsing from URL Query Parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialCategory = urlParams.get("category") || "";
+      const initialSearch = urlParams.get("search") || "";
+      const initialSort = urlParams.get("sort") || "newest";
+
+      const categorySelect = document.getElementById("filter-category");
+      const sortSelect = document.getElementById("filter-sort");
+      const searchInput = document.getElementById("search-keyword");
+
+      if (initialCategory) categorySelect.value = initialCategory;
+      if (initialSort) sortSelect.value = initialSort;
+      if (initialSearch) searchInput.value = initialSearch;
+
+      // 2. Fetcher pipeline
+      const fetchProducts = async () => {
+        const category = categorySelect.value;
+        const sort = sortSelect.value;
+        const search = searchInput.value;
+
+        // Build query string
+        let query = `/api/products?page=${currentPage}&limit=${limit}`;
+        if (category) query += `&category=${encodeURIComponent(category)}`;
+        if (sort) query += `&sort=${encodeURIComponent(sort)}`;
+        if (search) query += `&search=${encodeURIComponent(search)}`;
+
+        const grid = document.getElementById("catalog-grid");
+        grid.innerHTML = `
+          <div class="card product-card" style="grid-column: 1/-1; min-height: 300px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-style: dashed;">
+            <div class="ambient-glow" style="width: 100px; height: 100px;"></div>
+            <p style="color: var(--text-secondary); text-align: center; font-size: 14px;">Retrieving Drops...</p>
+          </div>
+        `;
+
+        try {
+          const res = await fetch(query);
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.message || "Failed request");
+
+          renderProducts(data.products);
+          renderPagination(data.page, data.pages);
+        } catch (err) {
+          console.error("Products retrieval failure:", err);
+          grid.innerHTML = `
+            <div class="card product-card" style="grid-column: 1/-1; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-style: dashed;">
+              <p style="color: var(--text-secondary); font-size: 14px;">Failed to reload products catalog. Verify server connection.</p>
+            </div>
+          `;
+        }
+      };
+
+      // 3. Renderer cards
+      const renderProducts = (products) => {
+        const grid = document.getElementById("catalog-grid");
+        grid.innerHTML = "";
+
+        if (!products || products.length === 0) {
+          grid.innerHTML = `
+            <div class="card product-card" style="grid-column: 1/-1; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-style: dashed;">
+              <p style="color: var(--text-secondary); font-size: 14px;">No products match the filter parameters.</p>
+            </div>
+          `;
+          return;
+        }
+
+        products.forEach(p => {
+          const productHtml = `
+            <a href="/product.html?id=${p._id}" class="card product-card" id="prod-card-${p._id}">
+              <div class="product-image-container">
+                ${p.imageUrl 
+                  ? `<img src="${p.imageUrl}" alt="${p.name}" class="product-image">`
+                  : `
+                    <svg class="product-silhouette" stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20.38 3.46L16 22l-4-9-9-4 17.38-5.54z"></path>
+                    </svg>
+                  `
+                }
+              </div>
+              <div class="product-details">
+                <span class="uppercase-label">${p.category}</span>
+                <h3 class="card-title">${p.name}</h3>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top: auto; padding-top: 12px;">
+                  <span class="price">$${p.price.toFixed(2)}</span>
+                  <span class="uppercase-label" style="font-size:10px; color:${p.stock > 0 ? "var(--green)" : "var(--red)"}">
+                    ${p.stock > 0 ? "IN STOCK" : "OUT OF STOCK"}
+                  </span>
+                </div>
+              </div>
+            </a>
+          `;
+          grid.insertAdjacentHTML("beforeend", productHtml);
+        });
+      };
+
+      // 4. Render standard pagination buttons (Q3 standard page stepper)
+      const renderPagination = (page, totalPages) => {
+        const controls = document.getElementById("pagination-controls");
+        controls.innerHTML = "";
+
+        if (totalPages <= 1) return;
+
+        // Previous button
+        const prevBtn = document.createElement("button");
+        prevBtn.className = `page-btn nav-page-btn ${page === 1 ? "disabled" : ""}`;
+        prevBtn.innerText = "Previous";
+        if (page > 1) {
+          prevBtn.onclick = () => {
+            currentPage = page - 1;
+            fetchProducts();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          };
+        }
+        controls.appendChild(prevBtn);
+
+        // Individual page number buttons
+        for (let i = 1; i <= totalPages; i++) {
+          const numBtn = document.createElement("button");
+          numBtn.className = `page-btn ${i === page ? "active" : ""}`;
+          numBtn.innerText = i;
+          numBtn.onclick = () => {
+            currentPage = i;
+            fetchProducts();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          };
+          controls.appendChild(numBtn);
+        }
+
+        // Next button
+        const nextBtn = document.createElement("button");
+        nextBtn.className = `page-btn nav-page-btn ${page === totalPages ? "disabled" : ""}`;
+        nextBtn.innerText = "Next";
+        if (page < totalPages) {
+          nextBtn.onclick = () => {
+            currentPage = page + 1;
+            fetchProducts();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          };
+        }
+        controls.appendChild(nextBtn);
+      };
+
+      // 5. Filters listeners triggers
+      categorySelect.addEventListener("change", () => {
+        currentPage = 1;
+        fetchProducts();
+      });
+      
+      sortSelect.addEventListener("change", () => {
+        currentPage = 1;
+        fetchProducts();
+      });
+
+      // Simple debounce keypress filter
+      let searchTimeout;
+      searchInput.addEventListener("input", () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          currentPage = 1;
+          fetchProducts();
+        }, 300);
+      });
+
+      // Initial execution
+      fetchProducts();
+    });
+  </script>
+</body>
+</html>

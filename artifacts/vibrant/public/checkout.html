@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIBRANT | Secure Checkout</title>
+  <meta name="description" content="Securely complete your streetwear order.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  
+  <style>
+    .checkout-section {
+      padding: 64px 0;
+      min-height: calc(100vh - 100px);
+    }
+
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 3.2fr 2fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .checkout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .checkout-form-section {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .section-block {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+    }
+
+    .block-title {
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .block-title-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--pink);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .checkout-item-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .checkout-item-row:last-child {
+      border-bottom: none;
+    }
+
+    .checkout-item-image {
+      width: 50px;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      background: var(--bg-elevated);
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Announcement strip -->
+  <div class="marquee-container" id="promo-marquee">
+    <div class="marquee-content">
+      <span class="marquee-text">LIMITED STREETWEAR ARCHIVES // SHIPPED GLOBALLY // VIBRANT LABS DROP NO. 01 // NO RE-RUNS EVER // IN VIBRANT WE TRUST //</span>
+      <span class="marquee-text">LIMITED STREETWEAR ARCHIVES // SHIPPED GLOBALLY // VIBRANT LABS DROP NO. 01 // NO RE-RUNS EVER // IN VIBRANT WE TRUST //</span>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="site-navbar">
+    <div class="container navbar-container">
+      <a href="/" class="nav-logo">Vibrant</a>
+      <ul class="nav-links">
+        <li><a href="/catalog.html">Shop</a></li>
+        <li><a href="#" class="coming-soon">Lookbook</a></li>
+        <li><a href="#" class="coming-soon">Editorial</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="nav-icon" id="theme-toggle-btn" aria-label="Toggle Theme"></button>
+        <a href="/cart.html" class="nav-icon cart-btn-container" aria-label="View Shopping Cart">
+          <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="cart-badge" id="cart-badge">0</span>
+        </a>
+        <a href="/auth.html" class="nav-icon" id="nav-auth-link" aria-label="Account Settings">
+          <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Checkout Section -->
+  <main class="container checkout-section">
+    <div class="ambient-glow" style="top: 20%; right: 5%; width: 350px; height: 350px;"></div>
+    
+    <span class="uppercase-label">Payment Processing</span>
+    <h1 class="hero-headline" style="font-size: clamp(36px, 6vw, 64px); margin-bottom: 48px;">SECURE CHECKOUT</h1>
+
+    <div class="checkout-grid" id="checkout-grid-container">
+      <!-- Loading state -->
+      <div style="grid-column: 1/-1; text-align: center; padding: 48px;">
+        <p style="color: var(--text-secondary);">Verifying bag items...</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 VIBRANT LABS. ALL RIGHTS RESERVED.</p>
+        <p style="letter-spacing: 0.15em;">DESIGNED IN TOKYO</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/ui.js"></script>
+  <script>
+    let activeCart = null;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadCheckoutData();
+    });
+
+    const loadCheckoutData = async () => {
+      const token = localStorage.getItem("token");
+      const container = document.getElementById("checkout-grid-container");
+
+      if (!token) {
+        window.location.href = "/auth.html?redirect=/checkout.html";
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/cart", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const cart = await res.json();
+
+        if (!res.ok) throw new Error(cart.message || "Failed cart retrieve");
+
+        if (!cart || !cart.items || cart.items.length === 0) {
+          container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 64px 24px;">
+              <h2 class="section-heading">NO ITEMS TO CHECK OUT</h2>
+              <p style="color: var(--text-secondary); margin-bottom: 32px;">Please add fits to your shopping bag before proceeding.</p>
+              <a href="/catalog.html" class="btn btn-primary">BROWSE COLLECTIONS</a>
+            </div>
+          `;
+          return;
+        }
+
+        activeCart = cart;
+        renderCheckout(cart);
+      } catch (err) {
+        console.error("Checkout prep failure:", err);
+        container.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 48px;">
+            <h2 class="section-heading" style="color: var(--red);">Checkout offline</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 24px;">Failed to reach your active database bag.</p>
+            <button class="btn btn-primary" onclick="loadCheckoutData()">RETRY</button>
+          </div>
+        `;
+      }
+    };
+
+    const renderCheckout = (cart) => {
+      const container = document.getElementById("checkout-grid-container");
+
+      // 1. Calculate costs
+      let subtotal = 0;
+      let itemsListHtml = '<div style="display:flex; flex-direction:column; gap:4px;">';
+
+      cart.items.forEach(item => {
+        subtotal += item.price * item.quantity;
+        itemsListHtml += `
+          <div class="checkout-item-row">
+            ${item.imageUrl 
+              ? `<img src="${item.imageUrl}" alt="${item.name}" class="checkout-item-image">`
+              : `<div class="checkout-item-image" style="background:var(--bg-elevated)"></div>`
+            }
+            <div style="flex-grow:1;">
+              <div style="font-weight:600;">${item.name}</div>
+              <div style="color:var(--text-secondary); font-size:11px; margin-top:2px;">SIZE: ${item.size} x ${item.quantity}</div>
+            </div>
+            <div style="font-weight:700;">$${(item.price * item.quantity).toFixed(2)}</div>
+          </div>
+        `;
+      });
+      itemsListHtml += "</div>";
+
+      const shipping = subtotal >= 100 ? 0 : 10;
+      const total = subtotal + shipping;
+
+      // 2. Shipping Address & mock Payment left panel form
+      const formsHtml = `
+        <form class="checkout-form-section" id="checkout-main-form">
+          <!-- Step 1: Shipping Details -->
+          <div class="section-block">
+            <h3 class="block-title">
+              <span class="block-title-number">1</span>
+              SHIPPING LOGISTICS
+            </h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="ship-first">First Name</label>
+                <input type="text" id="ship-first" class="form-input" required placeholder="FIRST NAME">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ship-last">Last Name</label>
+                <input type="text" id="ship-last" class="form-input" required placeholder="LAST NAME">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ship-street">Street Address</label>
+              <input type="text" id="ship-street" class="form-input" required placeholder="STREET ADDRESS & APARTMENT">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="ship-city">City</label>
+                <input type="text" id="ship-city" class="form-input" required placeholder="CITY">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ship-zip">ZIP / Postal Code</label>
+                <input type="text" id="ship-zip" class="form-input" required placeholder="10001">
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Payment Gate -->
+          <div class="section-block">
+            <h3 class="block-title">
+              <span class="block-title-number">2</span>
+              PAYMENT AUTHORIZATION
+            </h3>
+            <div class="form-group">
+              <label class="form-label" for="pay-card">Card Number</label>
+              <input type="text" id="pay-card" class="form-input" required placeholder="4242 4242 4242 4242" pattern="[0-9\\s]{13,19}">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="pay-exp">Expiration Date</label>
+                <input type="text" id="pay-exp" class="form-input" required placeholder="MM/YY">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pay-cvv">CVV Code</label>
+                <input type="password" id="pay-cvv" class="form-input" required placeholder="•••" maxlength="4">
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width:100%; padding:18px;">AUTHORIZE SECURE TRANSACTION</button>
+        </form>
+      `;
+
+      // 3. Right totals panel
+      const summaryHtml = `
+        <div class="cart-summary-box">
+          <span class="uppercase-label" style="text-align:center;">CHECKOUT QUEUE</span>
+          
+          ${itemsListHtml}
+
+          <div style="display:flex; flex-direction:column; gap:16px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:24px 0;">
+            <div class="summary-row">
+              <span style="color:var(--text-secondary)">Subtotal</span>
+              <span style="font-weight:600;">$${subtotal.toFixed(2)}</span>
+            </div>
+            <div class="summary-row">
+              <span style="color:var(--text-secondary)">Global Shipping</span>
+              <span style="font-weight:600;">${shipping === 0 ? "FREE" : `$${shipping.toFixed(2)}`}</span>
+            </div>
+          </div>
+
+          <div class="summary-row" style="font-size:18px; font-weight:900;">
+            <span>TOTAL VALUE</span>
+            <span style="color:var(--pink)">$${total.toFixed(2)}</span>
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = `
+        ${formsHtml}
+        ${summaryHtml}
+      `;
+
+      // Bind submission triggers
+      const checkoutForm = document.getElementById("checkout-main-form");
+      checkoutForm.addEventListener("submit", executeCheckoutOrder);
+    };
+
+    // Trigger API order creation
+    async function executeCheckoutOrder(e) {
+      e.preventDefault();
+      const token = localStorage.getItem("token");
+
+      const shippingAddress = {
+        firstName: document.getElementById("ship-first").value,
+        lastName: document.getElementById("ship-last").value,
+        street: document.getElementById("ship-street").value,
+        city: document.getElementById("ship-city").value,
+        zip: document.getElementById("ship-zip").value
+      };
+
+      try {
+        const res = await fetch("/api/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ shippingAddress })
+        });
+        const order = await res.json();
+
+        if (!res.ok) {
+          window.showToast(order.message || "Failed to process security checkout.");
+          return;
+        }
+
+        window.showToast("TRANSACTION APPROVED! ORDER COMPLETED.");
+        window.updateCartBadge();
+
+        setTimeout(() => {
+          window.location.href = "/profile.html";
+        }, 1500);
+      } catch (err) {
+        console.error("Order processing failure:", err);
+        window.showToast("Secure payment server timeout.");
+      }
+    }
+  </script>
+</body>
+</html>

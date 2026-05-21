@@ -1,0 +1,157 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body::before, body::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.4;
+  pointer-events: none;
+  transition: transform 1.5s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+
+body::before {
+  top: -10%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(255, 45, 120, 0.3) 0%, rgba(255, 45, 120, 0) 70%);
+  animation: floatBefore 25s ease-in-out infinite;
+  transform: translate(calc(var(--mouse-x, 0) * 40px), calc(var(--mouse-y, 0) * 40px));
+}
+
+body::after {
+  bottom: -10%;
+  right: -10%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(194, 24, 91, 0.2) 0%, rgba(194, 24, 91, 0) 70%);
+  animation: floatAfter 30s ease-in-out infinite;
+  transform: translate(calc(var(--mouse-x, 0) * -40px), calc(var(--mouse-y, 0) * -40px));
+}
+
+@keyframes floatBefore {
+  0% {
+    translate: 0px 0px;
+  }
+  33% {
+    translate: 10vw 8vh;
+  }
+  66% {
+    translate: -5vw 15vh;
+  }
+  100% {
+    translate: 0px 0px;
+  }
+}
+
+@keyframes floatAfter {
+  0% {
+    translate: 0px 0px;
+  }
+  33% {
+    translate: -8vw -10vh;
+  }
+  66% {
+    translate: 8vw -5vh;
+  }
+  100% {
+    translate: 0px 0px;
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pink);
+}
+
+/* Layout boundaries */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Typography scales */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.hero-headline {
+  font-size: clamp(48px, 8vw, 96px);
+  text-transform: uppercase;
+}
+
+.section-heading {
+  font-size: clamp(28px, 4vw, 48px);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.card-title {
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 600;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--pink);
+}
+
+.uppercase-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  color: inherit;
+}

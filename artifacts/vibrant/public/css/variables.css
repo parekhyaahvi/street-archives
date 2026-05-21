@@ -1,0 +1,51 @@
+/* Color tokens & Typography based on 03_Design_Doc.md */
+:root {
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --glass-blur: blur(16px);
+}
+
+/* Default Dark Theme */
+:root[data-theme="dark"] {
+  --bg-base: #080808;
+  --bg-surface: rgba(17, 17, 17, 0.45);
+  --bg-elevated: rgba(20, 20, 20, 0.55);
+  --pink: #FF2D78;
+  --pink-gradient: linear-gradient(135deg, #FF2D78, #C2185B);
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0A0A0;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-focus: #FF2D78;
+  --shadow-glow: 0 0 20px rgba(255, 45, 120, 0.4);
+  --shadow-card-hover: 0 0 25px rgba(255, 45, 120, 0.15);
+  --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --glass-bg: rgba(8, 8, 8, 0.75);
+  --glass-border: rgba(255, 45, 120, 0.3);
+
+  --green: #22C55E;
+  --red: #EF4444;
+  --yellow: #FBBF24;
+}
+
+/* Light Theme */
+:root[data-theme="light"] {
+  --bg-base: #F0E7D5;
+  --bg-surface: rgba(221, 197, 163, 0.45);
+  --bg-elevated: rgba(221, 197, 163, 0.65);
+  --pink: #FF2D78;
+  --pink-gradient: linear-gradient(135deg, #FF2D78, #C2185B);
+  --text-primary: #1A1A1A;
+  --text-secondary: #555555;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-focus: #FF2D78;
+  --shadow-glow: 0 4px 24px rgba(255, 45, 120, 0.2);
+  --shadow-card-hover: 0 8px 30px rgba(255, 45, 120, 0.12);
+  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --glass-bg: rgba(247, 243, 244, 0.75);
+  --glass-border: rgba(255, 45, 120, 0.2);
+
+  --green: #22C55E;
+  --red: #EF4444;
+  --yellow: #FBBF24;
+}
