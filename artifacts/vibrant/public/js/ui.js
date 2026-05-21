@@ -109,7 +109,7 @@ const updateNavbarAuth = () => {
       if (authLink) {
         if (user.role === "admin") {
           authLink.innerHTML = `<span class="uppercase-label font-bold" style="color: var(--pink); font-weight: 700;">Dashboard</span>`;
-          authLink.href = "/admin.html";
+          authLink.href = "/profile.html";
         } else {
           authLink.innerHTML = `
             <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
