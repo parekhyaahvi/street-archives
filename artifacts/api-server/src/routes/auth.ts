@@ -5,7 +5,8 @@ import { User } from "../models/User";
 const router = Router();
 
 const generateToken = (userId: string, role: string) => {
-  const secret = process.env["JWT_SECRET"] || "dev_secret_key";
+  const secret = process.env["JWT_SECRET"];
+  if (!secret) throw new Error("JWT_SECRET environment variable is not set");
   return jwt.sign({ userId, role }, secret, { expiresIn: "7d" });
 };
 
@@ -45,10 +46,7 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email });
     if (user && (await user.matchPassword(password))) {
       res.status(200).json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
+        user: { _id: user._id, name: user.name, email: user.email, role: user.role },
         token: generateToken(String(user._id), user.role),
       });
     } else {

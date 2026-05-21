@@ -220,7 +220,7 @@
 
       // Retrieve transaction list history
       try {
-        const res = await fetch("/api/orders", {
+        const res = await fetch("/api/orders/myorders", {
           headers: { Authorization: `Bearer ${token}` }
         });
         const orders = await res.json();
@@ -258,18 +258,20 @@
         let statusClass = "status-pending";
         let statusLabel = "PENDING PROCESS";
 
-        if (order.status === "Pending") {
+        if (order.status === "Order Placed") {
           statusClass = "status-pending";
-          statusLabel = "PENDING PROCESS";
+          statusLabel = "ORDER PLACED";
+        } else if (order.status === "Processing") {
+          statusClass = "status-pending";
+          statusLabel = "PROCESSING";
         } else if (order.status === "Shipped") {
           statusClass = "status-shipped";
           statusLabel = "OUT FOR DELIVERY";
         } else if (order.status === "Delivered") {
           statusClass = "status-delivered";
           statusLabel = "ARCHIVED VAULTED";
-        } else if (order.status === "Cancelled") {
-          statusClass = "status-cancelled";
-          statusLabel = "TRANSACTION VOIDED";
+        } else {
+          statusLabel = order.status?.toUpperCase() || "UNKNOWN";
         }
 
         // Format dates
@@ -314,7 +316,7 @@
               <div style="text-align:right;">
                 <span class="uppercase-label" style="font-size: 10px;">TRANSACTION CHARGE</span>
                 <p style="font-size:18px; font-weight:900; color:var(--pink); margin-top:4px;">
-                  $${order.totalAmount.toFixed(2)}
+                  $${(order.total ?? order.totalAmount ?? 0).toFixed(2)}
                 </p>
               </div>
             </div>
