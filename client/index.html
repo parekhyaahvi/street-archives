@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIBRANT | Streetwear E-Commerce Editorial</title>
+  <!-- SEO Best Practices -->
+  <meta name="description" content="Discover VIBRANT, a highly premium streetwear e-commerce platform offering limited drops, curated fits, and active aesthetic style.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  
+  <style>
+    /* Unique index page layout additions */
+    .hero-section {
+      position: relative;
+      min-height: calc(100vh - 100px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 0;
+      overflow: hidden;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+    
+    .hero-tagline {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 16px;
+    }
+    
+    .hero-description {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--text-secondary);
+      margin: 24px 0 40px 0;
+      max-width: 600px;
+    }
+
+    .category-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .category-card {
+      height: 200px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 24px;
+      cursor: pointer;
+      transition: var(--transition-normal);
+    }
+
+    .category-card:hover {
+      border-color: var(--pink);
+      box-shadow: var(--shadow-card-hover);
+    }
+
+    .category-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(8, 8, 8, 0.8), transparent);
+      z-index: 1;
+      transition: var(--transition-fast);
+    }
+
+    .category-card:hover::before {
+      background: linear-gradient(to top, rgba(255, 45, 120, 0.4), transparent);
+    }
+
+    .category-name {
+      font-size: 24px;
+      font-weight: 900;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 2;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+    }
+
+    .catalog-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .catalog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 48px;
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 32px;
+    }
+
+    /* Newsletter section styles */
+    .newsletter-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 64px 40px;
+      text-align: center;
+      margin: 80px auto;
+      max-width: 900px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 32px auto 0 auto;
+      gap: 12px;
+    }
+
+    /* Footer structure */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 64px 0;
+      background: var(--bg-surface);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-logo {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+    }
+
+    .footer-heading {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* Shopping Cart Icon badge helper styling */
+    .cart-btn-container {
+      position: relative;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: var(--pink-gradient);
+      color: #FFFFFF;
+      font-size: 10px;
+      font-weight: 700;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 6px rgba(255, 45, 120, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Marquee Loop Strip -->
+  <div class="marquee-container" id="promo-marquee">
+    <div class="marquee-content">
+      <span class="marquee-text">LIMITED STREETWEAR ARCHIVES // SHIPPED GLOBALLY // VIBRANT LABS DROP NO. 01 // NO RE-RUNS EVER // IN VIBRANT WE TRUST //</span>
+      <span class="marquee-text">LIMITED STREETWEAR ARCHIVES // SHIPPED GLOBALLY // VIBRANT LABS DROP NO. 01 // NO RE-RUNS EVER // IN VIBRANT WE TRUST //</span>
+    </div>
+  </div>
+
+  <!-- Sticky Glassmorphic Navbar -->
+  <nav class="navbar" id="site-navbar">
+    <div class="container navbar-container">
+      <a href="/" class="nav-logo" id="brand-logo-btn">Vibrant</a>
+      
+      <ul class="nav-links">
+        <li><a href="/catalog.html" id="nav-shop-link">Shop</a></li>
+        <li><a href="#" class="coming-soon" id="nav-lookbook-link">Lookbook</a></li>
+        <li><a href="#" class="coming-soon" id="nav-editorial-link">Editorial</a></li>
+      </ul>
+      
+      <div class="nav-actions">
+        <!-- Sun/Moon Theme switcher button -->
+        <button class="nav-icon" id="theme-toggle-btn" aria-label="Toggle Theme">
+          <!-- Icon dynamically rendered by ui.js -->
+        </button>
+        
+        <!-- Cart Badge Icon Link -->
+        <a href="/cart.html" class="nav-icon cart-btn-container" id="nav-cart-btn" aria-label="View Shopping Cart">
+          <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="cart-badge" id="cart-badge">0</span>
+        </a>
+        
+        <!-- Account Profile Link (handles Admin / Customer / Auth pages redirect) -->
+        <a href="/auth.html" class="nav-icon" id="nav-auth-link" aria-label="Account Settings">
+          <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="container hero-section">
+    <div class="ambient-glow" style="top: 10%; right: 5%;"></div>
+    <div class="ambient-glow" style="bottom: 20%; left: -5%;"></div>
+    
+    <div class="hero-content">
+      <div class="hero-tagline" id="hero-tag">ARCHIVE 01 // THE NEW ERA</div>
+      <h1 class="hero-headline" id="hero-main-title">STREETWEAR<br><span style="color: var(--pink);">REDEFINED.</span></h1>
+      <p class="hero-description" id="hero-intro-text">
+        High-fidelity silhouettes. Heavyweight organic materials. A visual aesthetic built for modern urban spaces. Welcome to the VIBRANT collective.
+      </p>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+        <a href="/catalog.html" class="btn btn-primary" id="hero-cta-btn">SHOP THE DROPS</a>
+        <a href="#" class="btn btn-secondary coming-soon" id="hero-secondary-cta">VIEW THE BOOK</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Categories Filter Section -->
+  <section class="container category-section" id="category-browse-section">
+    <span class="uppercase-label">Curated Collections</span>
+    <h2 class="section-heading" style="margin-top: 8px;">BROWSE CATEGORIES</h2>
+    
+    <div class="category-grid">
+      <!-- New Arrivals Quick Filter -->
+      <a href="/catalog.html?category=New%20Arrivals" class="category-card" id="cat-card-new">
+        <span class="category-name">New Arrivals</span>
+      </a>
+      <!-- Men Collection -->
+      <a href="/catalog.html?category=Men" class="category-card" id="cat-card-men">
+        <span class="category-name">Men Collection</span>
+      </a>
+      <!-- Women Collection -->
+      <a href="/catalog.html?category=Women" class="category-card" id="cat-card-women">
+        <span class="category-name">Women Collection</span>
+      </a>
+      <!-- Accessories -->
+      <a href="/catalog.html?category=Accessories" class="category-card" id="cat-card-acc">
+        <span class="category-name">Accessories</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Featured Grid (Dynamic Feed) -->
+  <section class="container catalog-section" id="featured-drops-section">
+    <div class="catalog-header">
+      <div>
+        <span class="uppercase-label">Aesthetic Selections</span>
+        <h2 class="section-heading" style="margin-top: 8px; margin-bottom: 0;">FEATURED DROPS</h2>
+      </div>
+      <a href="/catalog.html" class="btn btn-outline" style="padding: 10px 24px; font-size: 13px;" id="view-all-products-btn">VIEW ALL</a>
+    </div>
+
+    <div class="catalog-grid" id="featured-grid">
+      <!-- Dynamic cards loaded via script, fallback placeholders displaying glow wireframes -->
+      <div class="card product-card" style="min-height: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-style: dashed;">
+        <div class="ambient-glow" style="width: 100px; height: 100px;"></div>
+        <p style="color: var(--text-secondary); text-align: center; font-size: 14px;">Retrieving active catalog items...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Signup Form -->
+  <section class="container" style="padding: 20px 0;">
+    <div class="newsletter-section" id="newsletter-form-container">
+      <div class="ambient-glow" style="top: -50px; left: 50%; transform: translateX(-50%); width: 250px; height: 250px;"></div>
+      <span class="uppercase-label">GET VIP MEMBERSHIP</span>
+      <h2 class="section-heading" style="margin-top: 12px; margin-bottom: 16px;">VIBRANT INNER CIRCLE</h2>
+      <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto; font-size: 15px;">
+        Subscribe to unlock early access passcodes to limited-release drops, private restocks, and exclusive apparel editorials.
+      </p>
+      <form class="newsletter-form" id="newsletter-subscription-form">
+        <input type="email" placeholder="ENTER YOUR EMAIL" class="form-input" style="border-radius: 999px; text-transform: uppercase;" required id="news-email-field">
+        <button type="submit" class="btn btn-primary" id="news-subscribe-btn">JOIN</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Site Footer -->
+  <footer class="footer" id="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <a href="/" class="footer-logo">Vibrant</a>
+          <p style="color: var(--text-secondary); font-size: 14px; max-width: 250px;">
+            Aesthetic streetwear clothing and limited release designer fits.
+          </p>
+        </div>
+        <div>
+          <h3 class="footer-heading">COLLECTIONS</h3>
+          <ul class="footer-links">
+            <li><a href="/catalog.html?category=New%20Arrivals">New Arrivals</a></li>
+            <li><a href="/catalog.html?category=Men">Men Apparel</a></li>
+            <li><a href="/catalog.html?category=Women">Women Apparel</a></li>
+            <li><a href="/catalog.html?category=Accessories">Accessories</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-heading">SUPPORT</h3>
+          <ul class="footer-links">
+            <li><a href="#" class="coming-soon">Tracking Order</a></li>
+            <li><a href="#" class="coming-soon">Global Shipping info</a></li>
+            <li><a href="#" class="coming-soon">Refund Guidelines</a></li>
+            <li><a href="#" class="coming-soon">Help Desk FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-heading">VIBRANT COLLECTIVE</h3>
+          <ul class="footer-links">
+            <li><a href="#" class="coming-soon">Story Archive</a></li>
+            <li><a href="#" class="coming-soon">Editorial Journal</a></li>
+            <li><a href="#" class="coming-soon">Artist Collabs</a></li>
+            <li><a href="#" class="coming-soon">Media Inquiries</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 VIBRANT LABS. ALL RIGHTS RESERVED.</p>
+        <p style="letter-spacing: 0.15em;">DESIGNED IN TOKYO</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/ui.js"></script>
+  <script>
+    // Fetch products dynamically to display on featured landing list
+    document.addEventListener("DOMContentLoaded", () => {
+      const grid = document.getElementById("featured-grid");
+      
+      fetch("/api/products?limit=3")
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.products && data.products.length > 0) {
+            grid.innerHTML = "";
+            data.products.forEach(p => {
+              const productCardHtml = `
+                <a href="/product.html?id=${p._id}" class="card product-card" id="prod-card-${p._id}">
+                  <div class="product-image-container">
+                    ${p.imageUrl 
+                      ? `<img src="${p.imageUrl}" alt="${p.name}" class="product-image">`
+                      : `
+                        <svg class="product-silhouette" stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M20.38 3.46L16 22l-4-9-9-4 17.38-5.54z"></path>
+                        </svg>
+                      `
+                    }
+                  </div>
+                  <div class="product-details">
+                    <span class="uppercase-label">${p.category}</span>
+                    <h3 class="card-title">${p.name}</h3>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top: auto; padding-top: 12px;">
+                      <span class="price">$${p.price.toFixed(2)}</span>
+                      <span class="uppercase-label" style="font-size:10px; color:${p.stock > 0 ? "var(--green)" : "var(--red)"}">
+                        ${p.stock > 0 ? "IN STOCK" : "OUT OF STOCK"}
+                      </span>
+                    </div>
+                  </div>
+                </a>
+              `;
+              grid.insertAdjacentHTML("beforeend", productCardHtml);
+            });
+          } else {
+            grid.innerHTML = `
+              <div class="card product-card" style="grid-column: 1/-1; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-style: dashed;">
+                <p style="color: var(--text-secondary); font-size: 14px;">No products found in the archive drops yet. Admin: upload them in the dashboard.</p>
+              </div>
+            `;
+          }
+        })
+        .catch(err => {
+          console.warn("Featured drops API retrieve fallback:", err);
+          grid.innerHTML = `
+            <div class="card product-card" style="grid-column: 1/-1; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-style: dashed;">
+              <p style="color: var(--text-secondary); font-size: 14px;">Unable to reach the drops feed. Running offline.</p>
+            </div>
+          `;
+        });
+
+      // Newsletter form subscription trigger
+      const newsForm = document.getElementById("newsletter-subscription-form");
+      if (newsForm) {
+        newsForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const emailInput = document.getElementById("news-email-field");
+          if (emailInput.value) {
+            window.showToast("VIP ACCESS UNLOCKED! Welcome to VIBRANT.");
+            emailInput.value = "";
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

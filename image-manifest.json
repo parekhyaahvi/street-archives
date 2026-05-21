@@ -1,0 +1,50 @@
+{
+  "products": {
+    "graphic-tee": {
+      "hero": "/assets/images/graphic-tee-hero.jpg",
+      "angles": ["/assets/images/graphic-tee-angle-1.jpg", null, null]
+    },
+    "cropped-hoodie": {
+      "hero": null,
+      "angles": [null, null, null]
+    },
+    "high-waist-jeans": {
+      "hero": null,
+      "angles": [null, null, null]
+    },
+    "oversized-jacket": {
+      "hero": null,
+      "angles": [null, null, null]
+    },
+    "athleisure-set": {
+      "hero": null,
+      "angles": [null, null, null]
+    },
+    "streetwear-dress": {
+      "hero": null,
+      "angles": [null, null, null]
+    },
+    "midnight-cargo-pants": {
+      "hero": null,
+      "angles": [null, null, null]
+    },
+    "urban-tactics-jacket": {
+      "hero": null,
+      "angles": [null, null, null]
+    },
+    "street-runner-hoodie": {
+      "hero": null,
+      "angles": [null, null, null]
+    },
+    "reflective-jacket": {
+      "hero": null,
+      "angles": [null, null, null]
+    }
+  },
+  "banners": {
+    "new-arrivals": null,
+    "men-collection": null,
+    "women-collection": null,
+    "accessories": null
+  }
+}

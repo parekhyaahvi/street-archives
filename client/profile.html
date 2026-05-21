@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIBRANT | Member Profile</title>
+  <meta name="description" content="View order history, shipping details, and account preferences.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  
+  <style>
+    .profile-section {
+      padding: 64px 0;
+      min-height: calc(100vh - 100px);
+    }
+
+    .profile-header-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin-bottom: 56px;
+    }
+
+    .profile-meta-info {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .profile-badge {
+      background: var(--pink-gradient);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 6px 14px;
+      border-radius: 999px;
+      box-shadow: var(--shadow-glow);
+      display: inline-flex;
+      align-self: flex-start;
+    }
+
+    .order-history-section {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .order-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .order-item-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .order-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      padding: 8px 0;
+    }
+
+    .order-status-pill {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 6px 14px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-self: flex-start;
+    }
+
+    .status-pending {
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--yellow);
+    }
+
+    .status-shipped {
+      background: rgba(59, 130, 246, 0.15);
+      color: #3b82f6;
+    }
+
+    .status-delivered {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--green);
+    }
+
+    .status-cancelled {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--red);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Announcement strip -->
+  <div class="marquee-container" id="promo-marquee">
+    <div class="marquee-content">
+      <span class="marquee-text">LIMITED STREETWEAR ARCHIVES // SHIPPED GLOBALLY // VIBRANT LABS DROP NO. 01 // NO RE-RUNS EVER // IN VIBRANT WE TRUST //</span>
+      <span class="marquee-text">LIMITED STREETWEAR ARCHIVES // SHIPPED GLOBALLY // VIBRANT LABS DROP NO. 01 // NO RE-RUNS EVER // IN VIBRANT WE TRUST //</span>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="site-navbar">
+    <div class="container navbar-container">
+      <a href="/" class="nav-logo">Vibrant</a>
+      <ul class="nav-links">
+        <li><a href="/catalog.html">Shop</a></li>
+        <li><a href="#" class="coming-soon">Lookbook</a></li>
+        <li><a href="#" class="coming-soon">Editorial</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="nav-icon" id="theme-toggle-btn" aria-label="Toggle Theme"></button>
+        <a href="/cart.html" class="nav-icon cart-btn-container" aria-label="View Shopping Cart">
+          <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="cart-badge" id="cart-badge">0</span>
+        </a>
+        <a href="/profile.html" class="nav-icon active" id="nav-auth-link" aria-label="Account Settings">
+          <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Profile Portal -->
+  <main class="container profile-section">
+    <div class="ambient-glow" style="top: 25%; left: 50%; transform: translateX(-50%); width: 350px; height: 350px;"></div>
+    
+    <!-- User Account Profile Banner Info -->
+    <div class="profile-header-card" id="profile-banner">
+      <div class="profile-meta-info">
+        <span class="profile-badge">STREETWEAR ARCHIVIST</span>
+        <h1 class="hero-headline" style="font-size: 36px; margin: 12px 0 4px 0;" id="user-name">MEMBER</h1>
+        <p style="color: var(--text-secondary); font-size: 14px;" id="user-email">email@domain.com</p>
+      </div>
+      <button class="btn btn-secondary" onclick="logMemberOut()">LOGOUT ARCHIVES</button>
+    </div>
+
+    <!-- Order History List -->
+    <div>
+      <h2 class="section-heading" style="margin-bottom: 32px;">TRANSACTION HISTORY</h2>
+      
+      <div class="order-history-section" id="orders-timeline">
+        <div class="card" style="text-align: center; padding: 48px; border-style: dashed;">
+          <p style="color: var(--text-secondary);">Querying your history...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 VIBRANT LABS. ALL RIGHTS RESERVED.</p>
+        <p style="letter-spacing: 0.15em;">DESIGNED IN TOKYO</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/ui.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      loadProfile();
+    });
+
+    const loadProfile = async () => {
+      const token = localStorage.getItem("token");
+      const userString = localStorage.getItem("user");
+
+      if (!token || !userString) {
+        window.location.href = "/auth.html?redirect=/profile.html";
+        return;
+      }
+
+      // Display metadata info
+      const user = JSON.parse(userString);
+      document.getElementById("user-name").innerText = user.name.toUpperCase();
+      document.getElementById("user-email").innerText = user.email.toLowerCase();
+
+      // Retrieve transaction list history
+      try {
+        const res = await fetch("/api/orders", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const orders = await res.json();
+
+        if (!res.ok) throw new Error(orders.message || "Failed history call");
+
+        renderOrders(orders);
+      } catch (err) {
+        console.error("Order history retrieval failed:", err);
+        document.getElementById("orders-timeline").innerHTML = `
+          <div class="card" style="text-align: center; padding: 48px; border-style: dashed;">
+            <p style="color: var(--text-secondary);">Failed to connect to history. Retry later.</p>
+          </div>
+        `;
+      }
+    };
+
+    const renderOrders = (orders) => {
+      const timeline = document.getElementById("orders-timeline");
+
+      if (!orders || orders.length === 0) {
+        timeline.innerHTML = `
+          <div class="card" style="text-align: center; padding: 48px; border-style: dashed;">
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">No drops in your vault yet.</p>
+            <a href="/catalog.html" class="btn btn-primary">SHOP DROPS</a>
+          </div>
+        `;
+        return;
+      }
+
+      timeline.innerHTML = "";
+
+      orders.forEach(order => {
+        // Compile status badge
+        let statusClass = "status-pending";
+        let statusLabel = "PENDING PROCESS";
+
+        if (order.status === "Pending") {
+          statusClass = "status-pending";
+          statusLabel = "PENDING PROCESS";
+        } else if (order.status === "Shipped") {
+          statusClass = "status-shipped";
+          statusLabel = "OUT FOR DELIVERY";
+        } else if (order.status === "Delivered") {
+          statusClass = "status-delivered";
+          statusLabel = "ARCHIVED VAULTED";
+        } else if (order.status === "Cancelled") {
+          statusClass = "status-cancelled";
+          statusLabel = "TRANSACTION VOIDED";
+        }
+
+        // Format dates
+        const dateStr = new Date(order.createdAt).toLocaleDateString(undefined, {
+          year: "numeric", month: "short", day: "numeric"
+        });
+
+        // Loop items
+        let itemsHtml = "";
+        order.items.forEach(item => {
+          itemsHtml += `
+            <div class="order-item-row">
+              <span style="font-weight: 500;">
+                ${item.name} <span style="color: var(--text-secondary); margin-left: 8px;">(SIZE ${item.size} x ${item.quantity})</span>
+              </span>
+              <span style="font-weight: 600;">$${(item.price * item.quantity).toFixed(2)}</span>
+            </div>
+          `;
+        });
+
+        const orderHtml = `
+          <div class="order-card" id="order-${order._id}">
+            <div class="order-header">
+              <div>
+                <span class="uppercase-label" style="font-size: 10px;">ORDER METRICS</span>
+                <p style="font-size:13px; font-weight:700; margin-top:4px; color:var(--text-secondary)">ID: ${order._id}</p>
+              </div>
+              <span class="order-status-pill ${statusClass}">${statusLabel}</span>
+            </div>
+
+            <div class="order-item-list">
+              ${itemsHtml}
+            </div>
+
+            <div style="border-top:1px solid var(--border); padding-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+              <div>
+                <span class="uppercase-label" style="font-size: 10px;">SHIPPING LOGISTICS</span>
+                <p style="font-size:13px; color:var(--text-secondary); margin-top:4px;">
+                  ${order.shippingAddress.street}, ${order.shippingAddress.city}, ${order.shippingAddress.zip}
+                </p>
+              </div>
+              <div style="text-align:right;">
+                <span class="uppercase-label" style="font-size: 10px;">TRANSACTION CHARGE</span>
+                <p style="font-size:18px; font-weight:900; color:var(--pink); margin-top:4px;">
+                  $${order.totalAmount.toFixed(2)}
+                </p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        timeline.insertAdjacentHTML("beforeend", orderHtml);
+      });
+    };
+
+    function logMemberOut() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.showToast("MEMBER LOGGED OUT.");
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
