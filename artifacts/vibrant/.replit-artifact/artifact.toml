@@ -22,10 +22,6 @@ build = [ "pnpm", "--filter", "@workspace/vibrant", "run", "build" ]
 publicDir = "artifacts/vibrant/dist/public"
 serve = "static"
 
-[[services.production.rewrites]]
-from = "/*"
-to = "/index.html"
-
 [services.env]
 PORT = "23614"
 BASE_PATH = "/"
