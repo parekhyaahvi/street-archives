@@ -12,6 +12,13 @@ body {
   overflow-x: hidden;
   position: relative;
   transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+[data-theme="light"] body {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 36px 36px;
 }
 
 body::before, body::after {

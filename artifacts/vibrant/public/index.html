@@ -120,8 +120,8 @@
 
     .catalog-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 32px;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 24px;
     }
 
     /* Newsletter section styles */
@@ -144,58 +144,6 @@
       gap: 12px;
     }
 
-    /* Footer structure */
-    .footer {
-      border-top: 1px solid var(--border);
-      padding: 64px 0;
-      background: var(--bg-surface);
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 40px;
-      margin-bottom: 48px;
-    }
-
-    .footer-logo {
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: -0.05em;
-      text-transform: uppercase;
-    }
-
-    .footer-heading {
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-secondary);
-      margin-bottom: 20px;
-    }
-
-    .footer-links {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
-
-    .footer-links a:hover {
-      color: var(--text-primary);
-    }
-
-    .footer-bottom {
-      border-top: 1px solid var(--border);
-      padding-top: 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
   </style>
 </head>
 <body>
@@ -326,45 +274,90 @@
 
   <!-- Site Footer -->
   <footer class="footer" id="site-footer">
+    <div class="footer-glow"></div>
     <div class="container">
-      <div class="footer-grid">
-        <div style="display: flex; flex-direction: column; gap: 20px;">
-          <a href="/" class="footer-logo">Vibrant</a>
-          <p style="color: var(--text-secondary); font-size: 14px; max-width: 250px;">
-            Aesthetic streetwear clothing and limited release designer fits.
-          </p>
+      <div class="footer-top">
+
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="/" class="footer-logo-text">VIBRANT</a>
+          <p class="footer-tagline">High-fidelity streetwear.<br>No re-runs. No replicas. Ever.</p>
+          <div class="footer-social">
+            <!-- Instagram -->
+            <a href="#" class="social-link coming-soon" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <circle cx="12" cy="12" r="4"></circle>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle>
+              </svg>
+            </a>
+            <!-- TikTok -->
+            <a href="#" class="social-link coming-soon" aria-label="TikTok">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.67a8.18 8.18 0 0 0 4.78 1.52V6.74a4.85 4.85 0 0 1-1.01-.05z"/>
+              </svg>
+            </a>
+            <!-- X / Twitter -->
+            <a href="#" class="social-link coming-soon" aria-label="X (Twitter)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+            <!-- Pinterest -->
+            <a href="#" class="social-link coming-soon" aria-label="Pinterest">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
+              </svg>
+            </a>
+          </div>
         </div>
+
+        <!-- Collections Column -->
         <div>
-          <h3 class="footer-heading">COLLECTIONS</h3>
-          <ul class="footer-links">
+          <h3 class="footer-col-heading">COLLECTIONS</h3>
+          <ul class="footer-nav-list">
             <li><a href="/catalog.html?category=New%20Arrivals">New Arrivals</a></li>
             <li><a href="/catalog.html?category=Men">Men Apparel</a></li>
             <li><a href="/catalog.html?category=Women">Women Apparel</a></li>
             <li><a href="/catalog.html?category=Accessories">Accessories</a></li>
           </ul>
         </div>
+
+        <!-- Support Column -->
         <div>
-          <h3 class="footer-heading">SUPPORT</h3>
-          <ul class="footer-links">
-            <li><a href="#" class="coming-soon">Tracking Order</a></li>
-            <li><a href="#" class="coming-soon">Global Shipping info</a></li>
-            <li><a href="#" class="coming-soon">Refund Guidelines</a></li>
-            <li><a href="#" class="coming-soon">Help Desk FAQ</a></li>
+          <h3 class="footer-col-heading">SUPPORT</h3>
+          <ul class="footer-nav-list">
+            <li><a href="#" class="coming-soon">Track Order</a></li>
+            <li><a href="#" class="coming-soon">Shipping Info</a></li>
+            <li><a href="#" class="coming-soon">Returns & Refunds</a></li>
+            <li><a href="#" class="coming-soon">Size Guide</a></li>
+            <li><a href="#" class="coming-soon">Help Desk</a></li>
           </ul>
         </div>
+
+        <!-- Collective Column -->
         <div>
-          <h3 class="footer-heading">VIBRANT COLLECTIVE</h3>
-          <ul class="footer-links">
+          <h3 class="footer-col-heading">COLLECTIVE</h3>
+          <ul class="footer-nav-list">
             <li><a href="#" class="coming-soon">Story Archive</a></li>
             <li><a href="#" class="coming-soon">Editorial Journal</a></li>
             <li><a href="#" class="coming-soon">Artist Collabs</a></li>
-            <li><a href="#" class="coming-soon">Media Inquiries</a></li>
+            <li><a href="#" class="coming-soon">Press &amp; Media</a></li>
           </ul>
         </div>
+
       </div>
+
+      <!-- Bottom Bar -->
       <div class="footer-bottom">
-        <p>&copy; 2026 VIBRANT LABS. ALL RIGHTS RESERVED.</p>
-        <p style="letter-spacing: 0.15em;">DESIGNED IN TOKYO</p>
+        <p class="footer-copyright">&copy; 2026 VIBRANT LABS. ALL RIGHTS RESERVED.</p>
+        <div class="footer-bottom-right">
+          <span class="footer-pay-tag">VISA</span>
+          <span class="footer-pay-tag">MASTERCARD</span>
+          <span class="footer-pay-tag">AMEX</span>
+          <span class="footer-pay-tag">APPLE PAY</span>
+          <span class="footer-location">DESIGNED IN TOKYO</span>
+        </div>
       </div>
     </div>
   </footer>

@@ -121,7 +121,7 @@ const updateNavbarAuth = () => {
         }
       }
     } catch (e) {
-      console.error("Error decoding user token payload:", e);
+      // token malformed or missing — treat as logged out
     }
   } else {
     if (authLink) {
