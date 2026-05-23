@@ -125,6 +125,10 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
+
+    #catalog-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   </style>
 </head>
 <body>
@@ -181,16 +185,8 @@
       </div>
       <span class="uppercase-label" style="font-size:11px; color:var(--text-secondary);">DROP NO. 01 — 10 PIECES</span>
     </div>
-    <div class="catalog-grid" id="drop-grid" style="grid-template-columns: repeat(5, 1fr); gap: 16px;"></div>
+    <div class="catalog-grid" id="drop-grid" style="grid-template-columns: repeat(3, 1fr); gap: 24px;"></div>
   </section>
-
-  <!-- Divider -->
-  <div class="container" id="drop-divider" style="margin-bottom: 40px;">
-    <div style="border-top: 1px solid var(--border); padding-top: 40px; display:flex; align-items:baseline; gap:16px;">
-      <span class="uppercase-label" style="font-size:11px; color:var(--text-secondary); white-space:nowrap;">FULL ARCHIVE</span>
-      <div style="flex:1; height:1px; background: var(--border);"></div>
-    </div>
-  </div>
 
   <!-- Filters & Search Toolbar -->
   <main class="container">
@@ -327,7 +323,7 @@
       const sortSelect = document.getElementById("filter-sort");
       const searchInput = document.getElementById("search-keyword");
       const dropSection = document.getElementById("drop-section");
-      const dropDivider = document.getElementById("drop-divider");
+      const dropDivider = document.getElementById("drop-divider") || { style: {} };
 
       if (initialCategory) categorySelect.value = initialCategory;
       if (initialSort) sortSelect.value = initialSort;

@@ -281,7 +281,7 @@
       }
 
       container.innerHTML = `
-        <!-- Left: Image Showcase with Thumbnails -->
+        <!-- Left: Image Showcase -->
         <div class="image-showcase-column">
           <div class="detail-image-wrapper">
             ${p.imageUrl 
@@ -293,7 +293,6 @@
               `
             }
           </div>
-          ${thumbnailsHtml}
         </div>
 
         <!-- Right: Metadata Specifications Panel -->
@@ -307,6 +306,7 @@
           <div class="info-block">
             <span class="uppercase-label">PRICING VALUE</span>
             <span class="detail-price">$${p.price.toFixed(2)}</span>
+            ${thumbnailsHtml}
           </div>
 
           <div class="info-block">
