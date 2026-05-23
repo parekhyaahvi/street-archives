@@ -239,7 +239,7 @@
 }
 
 .product-image-container {
-  aspect-ratio: 3/4;
+  aspect-ratio: 1/1;
   background-color: var(--bg-elevated);
   border-radius: 12px;
   overflow: hidden;
