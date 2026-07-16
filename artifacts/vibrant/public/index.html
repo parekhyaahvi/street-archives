@@ -378,14 +378,7 @@
               const productCardHtml = `
                 <a href="/product.html?id=${p._id}" class="card product-card" id="prod-card-${p._id}">
                   <div class="product-image-container">
-                    ${p.imageUrl 
-                      ? `<img src="${p.imageUrl}" alt="${p.name}" class="product-image">`
-                      : `
-                        <svg class="product-silhouette" stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M20.38 3.46L16 22l-4-9-9-4 17.38-5.54z"></path>
-                        </svg>
-                      `
-                    }
+                    <img src="${window.getProductImageUrl(p)}" alt="${p.name}" class="product-image" onerror="this.onerror=null; this.outerHTML='<svg class=\'product-silhouette\' stroke=\'currentColor\' fill=\'none\' stroke-width=\'1.5\' viewBox=\'0 0 24 24\' stroke-linecap=\'round\' stroke-linejoin=\'round\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M20.38 3.46L16 22l-4-9-9-4 17.38-5.54z\'></path></svg>';">
                   </div>
                   <div class="product-details">
                     <span class="uppercase-label">${p.category}</span>

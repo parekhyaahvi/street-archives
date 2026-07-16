@@ -214,3 +214,24 @@ document.addEventListener("DOMContentLoaded", () => {
 window.showToast = showToast;
 window.updateCartBadge = updateCartBadge;
 window.updateNavbarAuth = updateNavbarAuth;
+
+const getProductImageUrl = (product) => {
+  if (product.imageUrl) return product.imageUrl;
+  // Fallback to local image based on slugified name
+  const slug = product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  return `/images/products/${slug}-hero.jpg`;
+};
+
+const getProductImageUrls = (product) => {
+  if (product.images && product.images.length > 0 && product.images[0]) return product.images;
+  const slug = product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  return [
+    `/images/products/${slug}-hero.jpg`,
+    `/images/products/${slug}-a1.jpg`,
+    `/images/products/${slug}-a2.jpg`,
+    `/images/products/${slug}-a3.jpg`
+  ];
+};
+
+window.getProductImageUrl = getProductImageUrl;
+window.getProductImageUrls = getProductImageUrls;

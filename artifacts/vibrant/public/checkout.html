@@ -223,10 +223,7 @@
         subtotal += item.price * item.quantity;
         itemsListHtml += `
           <div class="checkout-item-row">
-            ${item.imageUrl 
-              ? `<img src="${item.imageUrl}" alt="${item.name}" class="checkout-item-image">`
-              : `<div class="checkout-item-image" style="background:var(--bg-elevated)"></div>`
-            }
+            <img src="${window.getProductImageUrl(item)}" alt="${item.name}" class="checkout-item-image" onerror="this.onerror=null; this.outerHTML='<div class=\\'checkout-item-image\\' style=\\'background:var(--bg-elevated)\\'></div>';">
             <div style="flex-grow:1;">
               <div style="font-weight:600;">${item.name}</div>
               <div style="color:var(--text-secondary); font-size:11px; margin-top:2px;">SIZE: ${item.size} x ${item.quantity}</div>

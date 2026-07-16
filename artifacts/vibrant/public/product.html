@@ -266,7 +266,7 @@
       });
 
       // Multiple image showcase calculation
-      const productImages = p.images && p.images.length > 0 ? p.images : [p.imageUrl];
+      const productImages = window.getProductImageUrls(p);
       let thumbnailsHtml = "";
       if (productImages.length > 1) {
         thumbnailsHtml += `<div class="thumbnails-container">`;
@@ -284,14 +284,7 @@
         <!-- Left: Image Showcase -->
         <div class="image-showcase-column">
           <div class="detail-image-wrapper">
-            ${p.imageUrl 
-              ? `<img src="${p.imageUrl}" alt="${p.name}" class="detail-image" id="main-product-img">`
-              : `
-                <svg class="product-silhouette" stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" style="width: 150px; height: 150px;">
-                  <path d="M20.38 3.46L16 22l-4-9-9-4 17.38-5.54z"></path>
-                </svg>
-              `
-            }
+            <img src="${window.getProductImageUrl(p)}" alt="${p.name}" class="detail-image" id="main-product-img" onerror="this.onerror=null; this.outerHTML='<svg class=\'product-silhouette\' stroke=\'currentColor\' fill=\'none\' stroke-width=\'1.5\' viewBox=\'0 0 24 24\' stroke-linecap=\'round\' stroke-linejoin=\'round\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M20.38 3.46L16 22l-4-9-9-4 17.38-5.54z\'></path></svg>';">
           </div>
         </div>
 
