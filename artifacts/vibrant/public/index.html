@@ -62,48 +62,40 @@
     }
 
     .category-card {
-      height: 200px;
+      height: 120px;
       background: var(--bg-surface);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 12px;
       position: relative;
-      overflow: hidden;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
+      justify-content: center;
       padding: 24px;
       cursor: pointer;
       transition: var(--transition-normal);
+      text-decoration: none;
     }
 
     .category-card:hover {
       border-color: var(--pink);
-      box-shadow: var(--shadow-card-hover);
-    }
-
-    .category-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to top, rgba(8, 8, 8, 0.8), transparent);
-      z-index: 1;
-      transition: var(--transition-fast);
-    }
-
-    .category-card:hover::before {
-      background: linear-gradient(to top, rgba(255, 45, 120, 0.4), transparent);
+      background: rgba(255, 45, 120, 0.05);
+      box-shadow: 0 0 24px rgba(255, 45, 120, 0.15);
+      transform: translateY(-4px);
     }
 
     .category-name {
-      font-size: 24px;
-      font-weight: 900;
+      font-size: 20px;
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-primary);
+      transition: var(--transition-fast);
       position: relative;
       z-index: 2;
-      color: #FFFFFF;
-      letter-spacing: -0.02em;
+    }
+
+    .category-card:hover .category-name {
+      color: var(--pink);
     }
 
     .catalog-section {
@@ -168,10 +160,6 @@
       </ul>
       
       <div class="nav-actions">
-        <!-- Sun/Moon Theme switcher button -->
-        <button class="nav-icon" id="theme-toggle-btn" aria-label="Toggle Theme">
-          <!-- Icon dynamically rendered by ui.js -->
-        </button>
         
         <!-- Cart Badge Icon Link -->
         <a href="/cart.html" class="nav-icon cart-btn-container" id="nav-cart-btn" aria-label="View Shopping Cart">
